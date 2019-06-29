@@ -14,7 +14,7 @@ class WorldMapLeafletMapbox extends React.Component {
         //fetch("https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson")
         fetch("/earthquakes.geojson").then(response => response.json()).then(data => { 
             this.setState({ gdata: data.features }); 
-            console.log(data); 
+            //console.log(data); 
         });
     }
 
@@ -34,7 +34,7 @@ class WorldMapLeafletMapbox extends React.Component {
                     
                      { 
                         this.state.gdata.filter(i=> i.properties.mag>5).map(d=>{ 
-                            console.log(d);
+                            //console.log(d);
                             return (<CircleMarker 
                                 key={`myspan${d.geometry.coordinates[0]}-${d.geometry.coordinates[1]}`+Math.random()} 
                                 id={`myspan${d.geometry.coordinates[0]}-${d.geometry.coordinates[0]}`} 

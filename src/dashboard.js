@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {Fragment} from 'react';
+import { BrowserRouter, Link, Route } from 'react-router-dom'
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,7 +14,7 @@ import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
+//import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -30,7 +31,7 @@ function MadeWithLove() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Built with love by the '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" to="https://material-ui.com/">
         Material-UI 
       </Link>
       {' team and used delightfully by Sayed Minhal.'}
@@ -131,6 +132,8 @@ export default function Dashboard() {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
+  <BrowserRouter>
+  <Fragment>
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
@@ -177,36 +180,48 @@ export default function Dashboard() {
         <Container maxWidth="lg" className={classes.container}>
         
         <Grid container spacing={2}>
-            <Grid item xs={12} md={8} lg={12}>
-              <Paper className={fixedHeightPaper}>
-                <WorldMapCities />
-              </Paper>
-            </Grid>
-            <Grid item xs={12} md={8} lg={12}>
-              <Paper className={fixedHeightPaper}>
-                <WorldMapLeafletMapbox />
-              </Paper>
-            </Grid>
-            <Grid item xs={12} md={8} lg={12}>
-              <Paper className={fixedHeightPaper}>
-                <WorldMapMapboxAnimatedDot id='mapboxroot'/>
-              </Paper>
-            </Grid> 
-             
-            <Grid item xs={12} md={8} lg={12}>
-              <Paper className={fixedHeightPaper}>
-                <WorldMapMapbox />
-              </Paper>
-            </Grid> 
-            <Grid item xs={12} md={8} lg={12}>
-              <Paper className={fixedHeightPaper}>
-                <WorldMapD3 />
-              </Paper>
-            </Grid> 
+            <Route exact path="/" render={()=> 
+				<Grid item xs={12} md={8} lg={12}>
+				  <Paper className={fixedHeightPaper}>
+					<WorldMapCities />
+				  </Paper>
+				</Grid>
+			} />
+			<Route exact path="/map" render={()=>
+				<Grid item xs={12} md={8} lg={12}>
+				  <Paper className={fixedHeightPaper}>
+					<WorldMapLeafletMapbox />
+				  </Paper>
+				</Grid> 
+			}  />
+			<Route exact path="/mapanimatedmarker" render={()=>
+				 <Grid item xs={12} md={8} lg={12}>
+				  <Paper className={fixedHeightPaper}>
+					<WorldMapMapboxAnimatedDot id='mapboxroot'/>
+				  </Paper>
+				</Grid> 
+			} />
+            <Route exact path="/othermaps" render={()=> 
+				<Grid container spacing={2}>
+					<Grid item xs={12} md={8} lg={12}>
+					  <Paper className={fixedHeightPaper}>
+						<WorldMapMapbox />
+					  </Paper>
+					</Grid> 
+					<Grid item xs={12} md={8} lg={12}>
+					  <Paper className={fixedHeightPaper}>
+						<WorldMapD3 />
+					  </Paper>
+					</Grid> 
+				</Grid>
+			} />
+			
           </Grid>
         </Container>
         <MadeWithLove />
       </main>
     </div>
+	</Fragment>
+	</BrowserRouter>
   );
 }

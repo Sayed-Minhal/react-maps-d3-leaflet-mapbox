@@ -141,7 +141,7 @@ export default class WorldMapCities extends React.Component {
 
         // Render low resolution boundaries when moving,
         // render high resolution boundaries when stopped.
-        console.log(this.moving, this.countries110m , this.countries50m);
+        // console.log(this.moving, this.countries110m , this.countries50m);
         md3.select("#countryLines").datum(this.moving ? this.countries110m : this.countries50m).attr('d', geoPath(this.projection));
         const k = Math.sqrt(this.projection.scale() / 200);
         const circles = this.citiesG.selectAll('circle')
