@@ -30,7 +30,8 @@ export default class WorldMapCities extends React.Component {
             .html(d => `${d.name}: ${this.commaFormat(d.population)}`);
         this.svg.call(this.tip);
 
-        this.countries110mPromise=fetch("/110m.json")
+        //this.countries110mPromise=fetch("/110m.json")
+		this.countries110mPromise=fetch("https://unpkg.com/world-atlas@1/world/110m.json")
             .then(response => {
                 if (response.status !== 200) {
                     console.log(`There was a problem: ${response.status}`)
@@ -41,7 +42,8 @@ export default class WorldMapCities extends React.Component {
                 this.countries110m = feature(world110m, world110m.objects.countries)
             });
 
-        this.countries50mPromise=fetch("/50m.json")
+        //this.countries50mPromise=fetch("/50m.json")
+		this.countries50mPromise=fetch("https://unpkg.com/world-atlas@1.1.4/world/50m.json")
             .then(response => {
                 if (response.status !== 200) {
                     console.log(`There was a problem: ${response.status}`)
@@ -61,14 +63,14 @@ export default class WorldMapCities extends React.Component {
                 return response.json()
             }).then(cities => {
                 this.cities = cities;
-                this.cities.forEach(d => {
+                 this.cities.forEach(d => {
                     d.latitude = +d.latitude;
                     d.longitude = +d.longitude;
                     d.population = +d.population;
                 });
                 this.rScale.domain([0, md3.max(this.cities, this.rValue)]);
 
-                const point = {
+                /* const point = {
                     type: 'Point',
                     coordinates: [0, 0]
                 };
@@ -78,12 +80,14 @@ export default class WorldMapCities extends React.Component {
                     point.coordinates[0] = d.longitude;
                     point.coordinates[1] = d.latitude;
                     d.projected = geoPath(point) ? this.projection(point.coordinates) : null;
-                });
-                Promise.all([this.countries110mPromise, this.countries50mPromise,this.citiesPromise]).then(values=>{
-                    this.rendersvg();
-                })
+                }); */
+                
                 
             });
+			
+			Promise.all([this.countries110mPromise, this.countries50mPromise,this.citiesPromise]).then(values=>{
+                    this.rendersvg();
+                })
 
             this.rotate0=[];this.coords0=[];
     
